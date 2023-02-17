@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "282731917608",
+    "project_id": "plant-club-application-b3130",
+    "storage_bucket": "plant-club-application-b3130.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282731917608:android:d5411aecb92f7c063d201d",
+        "android_client_info": {
+          "package_name": "com.example.plant_club"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "282731917608-csj7mcpen53d7fpuoc21i70etfn7sqt5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqZTFDbi6Dwsc4HtK8Wy6ZCmo5zJKdIEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "282731917608-csj7mcpen53d7fpuoc21i70etfn7sqt5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

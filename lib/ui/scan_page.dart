@@ -8,6 +8,7 @@ class ScanPage extends StatefulWidget {
   State<ScanPage> createState() => _ScanPageState();
 }
 
+
 class _ScanPageState extends State<ScanPage> {
   @override
   Widget build(BuildContext context) {

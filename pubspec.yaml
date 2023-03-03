@@ -43,6 +43,15 @@ dependencies:
   firebase_auth: ^4.2.6
   flutter_launcher_icons: ^0.11.0
   firebase_ui_firestore: ^1.2.5
+  cloud_firestore: ^4.4.3
+  camera: ^0.10.3+2
+  path_provider: ^2.0.13
+  path: ^1.8.2
+  camera_android: ^0.10.4+1
+  image_picker: ^0.8.6+4
+  firebase_ml_vision: ^0.9.10
+  tflite: ^1.1.2
+  provider: ^6.0.5
 
 flutter_icons:
   android: true

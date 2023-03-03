@@ -12,9 +12,17 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+
   @override
   Widget build(BuildContext context) {
+    double sum = 0;
+
+    for (int i = 0; i < widget.addedToCartPlants.length; i++) {
+      sum += widget.addedToCartPlants[i].price;
+    }
+
     Size size = MediaQuery.of(context).size;
+    
     return Scaffold(
       body: widget.addedToCartPlants.isEmpty
           ? Center(
@@ -67,7 +75,7 @@ class _CartPageState extends State<CartPage> {
                       fontWeight: FontWeight.w300,
                     ),
                     ),
-                      Text(r'$65', style: TextStyle(
+                      Text('$sum', style: TextStyle(
                         fontSize: 24.0,
                         color: Constants.primaryColor,
                         fontWeight: FontWeight.bold,
@@ -80,5 +88,7 @@ class _CartPageState extends State<CartPage> {
         ),
       ),
     );
+    // Get the sum of price of all the plants in the cart
+    
   }
 }

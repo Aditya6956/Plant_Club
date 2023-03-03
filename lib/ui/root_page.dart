@@ -1,11 +1,9 @@
-
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:plant_club/ui/screens/scan_home_page.dart';
 import '../constants.dart';
 import '/models/plants.dart';
-import '/ui/scan_page.dart';
 import '/ui/screens/cart_page.dart';
 import '/ui/screens/favorite_page.dart';
 import '/ui/screens/home_page.dart';
@@ -20,7 +18,6 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
-
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   List<Plant> favorites = [];
@@ -29,11 +26,15 @@ class _RootPageState extends State<RootPage> {
   int _bottomNavIndex = 0;
 
   //List of the pages
-  List<Widget> _widgetOptions(){
+  List<Widget> _widgetOptions() {
     return [
-      const HomePage(),
-      FavoritePage(favoritedPlants: favorites,),
-      CartPage(addedToCartPlants: myCart,),
+      HomePage(),
+      FavoritePage(
+        favoritedPlants: favorites,
+      ),
+      CartPage(
+        addedToCartPlants: myCart,
+      ),
       ProfilePage(),
     ];
   }
@@ -53,13 +54,29 @@ class _RootPageState extends State<RootPage> {
     'Cart',
     'Profile',
   ];
-  
+
   @override
   Widget build(BuildContext context) {
     String? user = auth.currentUser!.displayName;
     return Scaffold(
       appBar: AppBar(
-        title: Text("\t\t\t\t\t\t\t\t\tWelcome $user", style: const TextStyle(color: Colors.black),),
+        title: Text(
+          "\t\t\t\t\t\t\t\t\tWelcome to $user",
+          style: const TextStyle(color: Colors.black),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                HomePage();
+              });
+            },
+            icon: const Icon(
+              Icons.refresh,
+              color: Colors.black,
+            ),
+          ),
+        ],
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0.0,
       ),
@@ -68,32 +85,38 @@ class _RootPageState extends State<RootPage> {
         children: _widgetOptions(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, PageTransition(child: const ScanPage(), type: PageTransitionType.bottomToTop));
+        onPressed: () {
+          Navigator.push(
+              context,
+              PageTransition(
+                  child: const ScanHomePage(),
+                  type: PageTransitionType.bottomToTop));
         },
         backgroundColor: Constants.primaryColor,
-        child: Image.asset('assets/images/code-scan-two.png', height: 30.0,),
+        child: Image.asset(
+          'assets/images/code-scan-two.png',
+          height: 30.0,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AnimatedBottomNavigationBar(
-        splashColor: Constants.primaryColor,
-        activeColor: Constants.primaryColor,
-        inactiveColor: Colors.black.withOpacity(.5),
-        icons: iconList,
-        activeIndex: _bottomNavIndex,
-        gapLocation: GapLocation.center,
-        notchSmoothness: NotchSmoothness.softEdge,
-        onTap: (index){
-          setState(() {
-            _bottomNavIndex = index;
-            final List<Plant> favoritedPlants = Plant.getFavoritedPlants();
-            final List<Plant> addedToCartPlants = Plant.addedToCartPlants();
+          splashColor: Constants.primaryColor,
+          activeColor: Constants.primaryColor,
+          inactiveColor: Colors.black.withOpacity(.5),
+          icons: iconList,
+          activeIndex: _bottomNavIndex,
+          gapLocation: GapLocation.center,
+          notchSmoothness: NotchSmoothness.softEdge,
+          onTap: (index) {
+            setState(() {
+              _bottomNavIndex = index;
+              List<Plant> favoritedPlants = Plant.getFavoritedPlants();
+              List<Plant> addedToCartPlants = Plant.addedToCartPlants();
 
-            favorites = favoritedPlants;
-            myCart = addedToCartPlants.toSet().toList();
-          });
-        }
-      ),
+              favorites = favoritedPlants;
+              myCart = addedToCartPlants.toSet().toList();
+            });
+          }),
     );
   }
 }

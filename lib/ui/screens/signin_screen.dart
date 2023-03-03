@@ -55,8 +55,16 @@ class _SignInScreenState extends State<SignInScreen> {
                       .then((value) {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => const RootPage()));
-                  }).onError((error, stackTrace) {
-                    print("Error ${error.toString()}");
+                  }).then((_) {
+                      setState(() {});
+                    }).onError((error, stackTrace) {
+                    // print("Error ${error.toString()}");
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Error ${error.toString()}"),
+                          duration: const Duration(seconds: 3),
+                        ),
+                      );
                   });
                 }),
                 signUpOption()

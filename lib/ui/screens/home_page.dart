@@ -1,3 +1,6 @@
+// ignore_for_file: sort_child_properties_last
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '/constants.dart';
@@ -14,17 +17,46 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   final FirebaseAuth auth = FirebaseAuth.instance;
+  Set<Plant> _plantList = <Plant>{};
+  List<Plant> _finalList = [];
 
   @override
   Widget build(BuildContext context) {
     int selectedIndex = 0;
     Size size = MediaQuery.of(context).size;
 
-    List<Plant> _plantList = Plant.plantList;
+    _plantList = Plant.plantList;
+    _finalList = _plantList.toList();
+    print(_plantList.length);
 
-    //Plants category
+    // Future<void> addPlant() {
+    //   return FirebaseFirestore.instance
+    //       .collection('plansts')
+    //       .doc('8')
+    //       .set({
+    //       'plantId': 8,
+    //     'price': 46,
+    //     'category': 'Recommended',
+    //     'plantName': 'Tritonia',
+    //     'size': 'Medium',
+    //     'rating': 4.7,
+    //     'humidity': 46,
+    //     'temperature': '21 - 25',
+    //     'imageURL': 'assets/images/plant-eight.png',
+    //     'isFavorated': false,
+    //     'decription':
+    //         'This plant is one of the best plant. It grows in most of the regions in the world and can survive'
+    //         'even the harshest weather condition.',
+    //     'isSelected': false
+    //       }, SetOptions(merge: true))
+    //       .then((value) => print('Plant Added'))
+    //       .catchError((error) => print('Failed to add plant: $error'));
+    // }
+
+    // addPlant();
+
+    // ignore: no_leading_underscores_for_local_identifiers
     List<String> _plantTypes = [
       'Recommended',
       'Indoor',
@@ -38,7 +70,6 @@ class _HomePageState extends State<HomePage> {
       return !isFavorited;
     }
 
-    String? user = auth.currentUser!.displayName;
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(
@@ -91,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                           context,
                           PageTransition(
                               child: DetailPage(
-                                plantId: _plantList[index].plantId,
+                                plantId: _finalList[index].plantId,
                               ),
                               type: PageTransitionType.bottomToTop));
                     },
@@ -110,12 +141,12 @@ class _HomePageState extends State<HomePage> {
                                 onPressed: () {
                                   setState(() {
                                     bool isFavorited = toggleIsFavorated(
-                                        _plantList[index].isFavorated);
-                                    _plantList[index].isFavorated = isFavorited;
+                                        _finalList[index].isFavorated);
+                                    _finalList[index].isFavorated = isFavorited;
                                   });
                                 },
                                 icon: Icon(
-                                  _plantList[index].isFavorated == true
+                                  _finalList[index].isFavorated == true
                                       ? Icons.favorite
                                       : Icons.favorite_border,
                                   color: Constants.primaryColor,
@@ -133,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                             right: 50,
                             top: 50,
                             bottom: 50,
-                            child: Image.asset(_plantList[index].imageURL),
+                            child: Image.asset(_finalList[index].imageURL),
                           ),
                           Positioned(
                             bottom: 15,
@@ -142,14 +173,14 @@ class _HomePageState extends State<HomePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  _plantList[index].category,
+                                  _finalList[index].category,
                                   style: const TextStyle(
                                     color: Colors.white70,
                                     fontSize: 16,
                                   ),
                                 ),
                                 Text(
-                                  _plantList[index].plantName,
+                                  _finalList[index].plantName,
                                   style: const TextStyle(
                                     color: Colors.white70,
                                     fontSize: 15,
@@ -170,7 +201,7 @@ class _HomePageState extends State<HomePage> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
-                                r'$' + _plantList[index].price.toString(),
+                                r'$' + _finalList[index].price.toString(),
                                 style: TextStyle(
                                     color: Constants.primaryColor,
                                     fontSize: 16),
@@ -206,10 +237,15 @@ class _HomePageState extends State<HomePage> {
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, PageTransition(child: DetailPage(plantId: _plantList[index].plantId), type: PageTransitionType.bottomToTop));
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: DetailPage(
+                                    plantId: _finalList[index].plantId),
+                                type: PageTransitionType.bottomToTop));
                       },
-                      child: PlantWidget(index: index, plantList: _plantList));
+                      child: PlantWidget(index: index, plantList: _finalList));
                 }),
           ),
         ],
@@ -217,4 +253,3 @@ class _HomePageState extends State<HomePage> {
     ));
   }
 }
-

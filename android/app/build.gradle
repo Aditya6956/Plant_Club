@@ -27,7 +27,16 @@ apply plugin: 'com.google.gms.google-services'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    aaptOptions {
+        noCompress 'tflite'
+        noCompress 'lite'
+    }
+
+    dependencies{
+        api 'com.google.firebase:firebase-ml-vision-image-label-model:17.0.2'
+    }
+
+    compileSdkVersion 33
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -48,8 +57,8 @@ android {
         applicationId "com.example.plant_club"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion 22
-        targetSdkVersion 30
+        minSdkVersion 21
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -68,6 +77,7 @@ flutter {
 }
 
 dependencies {
+    // api 'com.google.firebase:firebase-ml-vision-image-label-model:17.0.2'
     implementation platform('com.google.firebase:firebase-bom:31.2.1')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.firebase:firebase-analytics'

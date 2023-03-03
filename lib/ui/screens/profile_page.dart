@@ -57,12 +57,6 @@ class ProfilePage extends StatelessWidget {
                 ],
               ),
             ),
-            Text(
-              email!,
-              style: const TextStyle(
-                color: Colors.black,
-              ),
-            ),
             const SizedBox(
               height: 30,
             ),
@@ -78,6 +72,12 @@ class ProfilePage extends StatelessWidget {
                     title: 'My Profile',
                     route: ProfileDetails(),
                   ),
+                  ProfileWidget(
+                    icon: Icons.shopping_bag,
+                    title: 'My Orders',
+                    route: ProfileDetails(),
+                  ),
+                  
                   // // ignore: prefer_const_constructors
                   // ProfileWidget(
                   //   icon: Icons.settings,
@@ -95,7 +95,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                     onPressed: () {
                       auth.signOut();
-                      Navigator.push(
+                      Navigator.pop(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const SignInScreen()),

@@ -77,7 +77,7 @@ class ProfilePage extends StatelessWidget {
                     title: 'My Orders',
                     route: ProfileDetails(),
                   ),
-                  
+
                   // // ignore: prefer_const_constructors
                   // ProfileWidget(
                   //   icon: Icons.settings,
@@ -95,11 +95,9 @@ class ProfilePage extends StatelessWidget {
                     ),
                     onPressed: () {
                       auth.signOut();
-                      Navigator.pop(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SignInScreen()),
-                      );
+                      Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                          builder: (context) => SignInScreen()));
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Logged Out'),
